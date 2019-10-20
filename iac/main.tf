@@ -137,7 +137,7 @@ resource "null_resource" "minecraft" {
     inline = [
       "chmod a+x minecraft-setup.sh",
       "./minecraft-setup.sh ${var.mc-bucket}",
-      "cd mc-server",
+      "cd minecraft",
       "nohup java -Xmx1G -Xms1G -jar server.jar nogui >/dev/null 2>&1 &",
     ]
   }

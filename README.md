@@ -1,6 +1,14 @@
 # Terraform-deploy-minecraft
 Deploy Minecraft server using terraform to AWS
 
+Create S3 bucket for terraform
+Create S3 bucket for mc-backup
+Create Elastic IP
+Create EC2 key
+Enter values in config/account.tfvars
+
+Adjust download URL in 
+
 Uses lambda functions to create and destroy a minecraft server instance with terraform. S3 is used for server backups and for storing terraform resources. lambda functions can send notifications to a discord chat.
 
 Push button minecraft server uses 2 s3 buckets 
