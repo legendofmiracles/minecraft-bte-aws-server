@@ -1,0 +1,11 @@
+*.log
+*.swp
+*.back
+*.bak
+*.sql.gz
+~*
+.DS_Store
+
+.tmb/
+
+.terraform
