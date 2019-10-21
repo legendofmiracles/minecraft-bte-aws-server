@@ -6,7 +6,7 @@ locals {
 }
 
 # ------------------------------------
-# IAM User for mincraft world backup/restore
+# IAM Roile for mincraft world backup on S3
 # ------------------------------------
 resource "aws_iam_instance_profile" "minecraft" {
   name = "mc-backup"
@@ -63,7 +63,7 @@ resource "aws_instance" "minecraft" {
   # free tier eligible
   instance_type = "t2.micro"
 
-  ami = var.ami-images[var.aws-region]
+  ami               = var.ami-images[var.aws-region]
   security_groups   = [aws_security_group.minecraft.id]
   availability_zone = var.aws-zones[var.aws-region]
   key_name          = var.ec2-key-pair-name
@@ -120,16 +120,16 @@ resource "null_resource" "minecraft" {
     destination = "minecraft-setup.sh"
   }
   provisioner "file" {
-    source      = "../files/minecraft-setup.sh"
-    destination = "minecraft-start.sh"
+    source      = "../files/minecraft-server.sh"
+    destination = "minecraft-server.sh"
   }
 
   // install minecraft and sync backup
   provisioner "remote-exec" {
     inline = [
-      "chmod a+x minecraft-setup.sh",
+      "chmod a+x minecraft-*.sh",
       "./minecraft-setup.sh ${var.mc-bucket}",
-      "./minecraft-start.sh",
+      "./minecraft-server.sh start",
     ]
   }
 }
