@@ -116,20 +116,20 @@ resource "null_resource" "minecraft" {
 
   // copy deployment and start script
   provisioner "file" {
-    source      = "../files/minecraft-setup.sh"
-    destination = "minecraft-setup.sh"
+    source      = "../files/mc-setup.sh"
+    destination = "mc-setup.sh"
   }
   provisioner "file" {
-    source      = "../files/minecraft-server.sh"
-    destination = "minecraft-server.sh"
+    source      = "../files/mc-server.sh"
+    destination = "mc-server.sh"
   }
 
   // install minecraft and sync backup
   provisioner "remote-exec" {
     inline = [
       "chmod a+x minecraft-*.sh",
-      "./minecraft-setup.sh ${var.mc-bucket}",
-      "./minecraft-server.sh start",
+      "./mc-setup.sh ${var.mc-bucket}",
+      "./mc-server.sh start",
     ]
   }
 }
