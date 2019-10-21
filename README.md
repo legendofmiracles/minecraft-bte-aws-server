@@ -1,20 +1,31 @@
-# Terraform-deploy-minecraft
-Deploy Minecraft server using terraform to AWS
+# Terraform-deplay a minecraft server
 
-Create S3 bucket for terraform
-Create S3 bucket for mc-backup
-Create Elastic IP
-Create EC2 key
-Enter values in config/account.tfvars
+Deploy Minecraft server using terraform to AWS. 
 
-Adjust download URL in 
+Uses lambda functions to create and destroy a Minecraft server instance with terraform. S3 is used for server backups and for storing terraform resources. Lambda functions can send notifications to a Discord channel.
 
-Uses lambda functions to create and destroy a minecraft server instance with terraform. S3 is used for server backups and for storing terraform resources. lambda functions can send notifications to a discord chat.
+## Prerquisites
+* An AWS account with credentials for programmatic access
+* Download and install terraform
 
-Push button minecraft server uses 2 s3 buckets 
+## Manual Configuration
+* Create S3 bucket for terraform state
+* Create S3 bucket for minecraft backup
+* Create Elastic IP
+* Create EC2 key
 
--world backup
--terraform plan
+Enter corresponding values in `config/account.tfvars`.
+Copy [latest Minecraft server download URL](https://www.minecraft.net/en-us/download/server/) into `files/mc-server.sh`.
+
+## Initial Install
+* `cd iac`
+* `terraform init`
+* `terraform apply -var-file=../config/account.tfvars`
+* Sit back and enjoy the show
+
+## The man behind the curtain
+Beyond the allocation of AWs resources, the terraform script triggers modification of the ec2 instance. It installs the Minecraft server and adds crontab entries for syncing the minecraft directory to S3 and detecting idle state. Once idle state has been detected, it triggers the destruction of the ec2 instance via the afore mentioned lambda function.
+
 
 auto_shutoff.py - Runs on the minecraft server 
 
@@ -23,7 +34,5 @@ mine-build.py - This is used in a lambda function. It pulls terraform files and 
 mine-destroy.py - Used in a lambda function to run terraform destroy and update the terraform state file in the s3 bucket
 
 minecraft.sh - start up script use for ec2 instance
-
-new-minecraft-server.sh - start up script to use the first time you create a server, the initial server will be used to create the world backup s3 bucket.
 
 server.tf - terraform configuration file.
