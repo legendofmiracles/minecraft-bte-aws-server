@@ -127,7 +127,7 @@ resource "null_resource" "minecraft" {
   // install minecraft and sync backup
   provisioner "remote-exec" {
     inline = [
-      "chmod a+x minecraft-*.sh",
+      "chmod a+x mc-*.sh",
       "./mc-setup.sh ${var.mc-bucket}",
       "./mc-server.sh start",
     ]
