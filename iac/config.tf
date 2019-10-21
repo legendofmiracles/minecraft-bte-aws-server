@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     profile        = "hlgr360"
     bucket         = "hlgr360-tf-state"
-    key            = "minecraft.tfstate"
+    key            = "mc-server.tfstate"
     region         = "eu-central-1"
     encrypt        = true
   }
