@@ -21,6 +21,9 @@ EOF
     cd ..
 fi
 
+# start minecraft
+./mc-server.sh start
+
 # install minecraft status 
 sudo pip install mcstatus
 

@@ -129,7 +129,6 @@ resource "null_resource" "minecraft" {
     inline = [
       "chmod a+x mc-*.sh",
       "./mc-setup.sh ${var.mc-bucket}",
-      "./mc-server.sh start",
     ]
   }
 }
