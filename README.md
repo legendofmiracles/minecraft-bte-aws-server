@@ -26,7 +26,6 @@ Copy [latest Minecraft server download URL](https://www.minecraft.net/en-us/down
 ## The man behind the curtain
 Beyond the allocation of AWs resources, the terraform script triggers modification of the ec2 instance. It installs the Minecraft server and adds crontab entries for syncing the minecraft directory to S3 and detecting idle state. Once idle state has been detected, it triggers the destruction of the ec2 instance via the afore mentioned lambda function.
 
-
 auto_shutoff.py - Runs on the minecraft server 
 
 mine-build.py - This is used in a lambda function. It pulls terraform files and startup bash script from s3 and starts an ec2 instance.
@@ -36,3 +35,9 @@ mine-destroy.py - Used in a lambda function to run terraform destroy and update 
 minecraft.sh - start up script use for ec2 instance
 
 server.tf - terraform configuration file.
+
+## Debugging
+
+* Logging into ec2 instance: `ssh -i ~/.ssh/minecraft.pem ec2-user@<eip>`
+* Listing available screen sessions: `screen -ls`
+* Re-attaching to minecraft screen session: `screen -r minecraft`
