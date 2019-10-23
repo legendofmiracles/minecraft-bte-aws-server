@@ -5,7 +5,7 @@ sudo yum install java-1.8.0 -y
 sudo yum remove java-1.7.0-openjdk -y
 
 mkdir minecraft
-aws s3 sync s3://$1 minecraft/ --delete
+aws s3 sync s3://$1 minecraft/
 
 # install minecraft if this is the first time
 if [ ! -f "minecraft/eula.txt" ]; then
@@ -27,6 +27,6 @@ fi
 # install minecraft status 
 sudo pip install mcstatus
 
-# insert backup and auto-shutoff into cron tab
-crontab -l | { cat; echo "*/5 * * * * aws s3 sync minecraft/ s3://$1"; } | crontab -
-crontab -l | { cat; echo "*/5 * * * * python auto_shutoff.py"; } | crontab -
+# insert auto-shutoff into cron tab
+# crontab -l | { cat; echo "*/5 * * * * aws s3 sync minecraft/ s3://$1"; } | crontab -
+crontab -l | { cat; echo "*/5 * * * * python auto_shutoff.py s3://$1"; } | crontab -
