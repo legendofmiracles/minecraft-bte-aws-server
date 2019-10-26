@@ -60,8 +60,7 @@ EOF
 # Minecraft server
 # ------------------------------------
 resource "aws_instance" "minecraft" {
-  # free tier eligible
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
 
   ami               = var.ami-images[var.aws-region]
   security_groups   = [aws_security_group.minecraft.id]

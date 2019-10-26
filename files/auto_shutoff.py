@@ -44,7 +44,7 @@ if os.path.exists('/tmp/mc_last_activity'):
 			if not os.path.exists('/tmp/mc_backup'):
 				p = open('/tmp/mc_backup', 'w')
 				p.write(str(time.time()))
-				check_call(['aws', 's3', 'sync', '/homes/ec2-user/minecraft/', sys.argv[1]])
+				check_call(['aws', 's3', 'sync', '/home/ec2-user/minecraft/', sys.argv[1]])
 			
 			#req = urllib2.urlopen('<SERVER DESTROY LAMBDA FUNCTION>')
 
