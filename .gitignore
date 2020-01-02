@@ -2,10 +2,11 @@
 *.swp
 *.back
 *.bak
+*.zip
 *.sql.gz
 ~*
 .DS_Store
-
 .tmb/
-
 .terraform
+.vscode
+venv

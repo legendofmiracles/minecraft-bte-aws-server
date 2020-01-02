@@ -4,6 +4,12 @@
 sudo yum install java-1.8.0 -y
 sudo yum remove java-1.7.0-openjdk -y
 
+# copy tf templates to minecraft backup bucket
+aws s3 cp config.tf s3://$1
+aws s3 cp variables.tf s3://$1
+aws s3 cp account.tfvars s3://$1
+
+# create minecraft dir and sync with world backup bucket 
 mkdir minecraft
 aws s3 sync s3://$1 minecraft/
 
@@ -11,8 +17,9 @@ aws s3 sync s3://$1 minecraft/
 if [ ! -f "minecraft/eula.txt" ]; then
     echo "Installing Minecraft"
     cd minecraft
+    rm server.jar || true
     # pick latest from https://www.minecraft.net/en-us/download/server/
-    wget https://launcher.mojang.com/v1/objects/3dc3d84a581f14691199cf6831b71ed1296a9fdf/server.jar
+    wget https://launcher.mojang.com/v1/objects/4d1826eebac84847c71a77f9349cc22afd0cf0a1/server.jar
     cat >eula.txt<<EOF
 #By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
 #Tue Jan 27 21:40:00 UTC 2015
@@ -29,4 +36,4 @@ sudo pip install mcstatus
 
 # insert auto-shutoff into cron tab
 # crontab -l | { cat; echo "*/5 * * * * aws s3 sync minecraft/ s3://$1"; } | crontab -
-crontab -l | { cat; echo "*/5 * * * * python auto_shutoff.py s3://$1"; } | crontab -
+crontab -l | { cat; echo "*/5 * * * * python auto-shutoff.py s3://$1"; } | crontab -

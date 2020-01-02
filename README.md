@@ -7,15 +7,23 @@ Uses lambda functions to create and destroy a Minecraft server instance with ter
 ## Prerquisites
 * An AWS account with credentials for programmatic access
 * Download and install terraform
+* Python, and pip installed
 
 ## Manual Configuration
+### Local
+* Install virtualenv: `sudo pip install virtualenv`
+
+. venv/bin/activate
+pip install -r requirements.txt
+
+### AWS
 * Create S3 bucket for terraform state
 * Create S3 bucket for minecraft backup
 * Create Elastic IP
 * Create EC2 key
 
 Enter corresponding values in `config/account.tfvars`.
-Copy [latest Minecraft server download URL](https://www.minecraft.net/en-us/download/server/) into `files/mc-server.sh`.
+Copy [latest Minecraft server download URL](https://www.minecraft.net/en-us/download/server/) into `src/mc-server.sh`.
 
 ## Initial Install
 * `cd iac`
@@ -37,7 +45,15 @@ minecraft.sh - start up script use for ec2 instance
 server.tf - terraform configuration file.
 
 ## Debugging
-
 * Logging into ec2 instance: `ssh -i ~/.ssh/minecraft.pem ec2-user@<eip>`
 * Listing available screen sessions: `screen -ls`
 * Re-attaching to minecraft screen session: `screen -r minecraft`
+
+## Additional links
+* https://www.codingforentrepreneurs.com/blog/install-django-on-mac-or-linux
+* https://jeremievallee.com/2017/03/26/aws-lambda-terraform.html
+
+## Updating Minecraft
+* Add new Minecraft version download URL in `src/mc-setup.sh`
+* Remove `eula.txt` file in root of minecraft backup S3 bucket
+* Re-apply terraform with `terraform apply -var-file=../config/account.tfvars`

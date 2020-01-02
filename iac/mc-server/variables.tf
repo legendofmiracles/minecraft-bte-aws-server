@@ -23,6 +23,11 @@ variable "mc-bucket" {
   type = string
 }
 
+# bucket name for tf state
+variable "tf-bucket" {
+  type = string
+}
+
 # define the region specific ami images
 variable "ami-images" {
   type = map(string)

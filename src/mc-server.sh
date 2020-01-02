@@ -20,7 +20,7 @@ if [ "$is_it_running" != "" ]
 then
   echo "*** There is already a screen called 'minecraft' running. Aborting!"
 else
-  echo "*** Starting minecraft-Server on screen 'minecraft'"
+  echo "*** Starting minecraft-server on screen 'minecraft'"
   cd $DIR
   # screen -A -m -d -L -S minecraft java -Xincgc -Xmx512M -XX:+UseConcMarkSweepGC -jar paperclip.jar -o true -h 127.0.0.1 -p 25565 -s 100 --log-append false --log-limit 50000
   screen -A -m -d -L -S minecraft java -Xmx1024M -Xms1024M -jar server.jar nogui
@@ -46,14 +46,14 @@ echo "*** Looking for running minecraft-Server via 'screen'"
 is_it_running=`screen -ls | grep minecraft`
 if [ "$is_it_running" != "" ]
 then
-  echo "*** Running minecraft-Server found:" $is_it_running
+  echo "*** Running minecraft-server found:" $is_it_running
   echo "*** Saving chunks with 'save-all'"
   screen -dr minecraft -p 0 -X stuff "$(printf "save-all\r")"
   echo "*** Sending message to players, that server will shutdown in 30 sec"
-  screen -dr minecraft -p 0 -X stuff "$(printf "broadcast Server wird in 30sec heruntergefahren...\r")"
+  screen -dr minecraft -p 0 -X stuff "$(printf "broadcast Server will be shutdown in 30sec...\r")"
   echo "*** Message sent. Wait 30 sec ..."
   sleep 30
-  screen -dr minecraft -p 0 -X stuff "$(printf "say Server stoppen ...\r")"
+  screen -dr minecraft -p 0 -X stuff "$(printf "say Server stopping ...\r")"
   echo ""
   echo "*** Stopping" $is_it_running "now."
   screen -dr minecraft -p 0 -X stuff "$(printf "stop\r")"
@@ -79,7 +79,7 @@ is_it_running=`screen -ls | grep minecraft`
 
 if [ "$is_it_running" != "" ]
 then
-echo "*** Running minecraft-Server found:" $is_it_running
+echo "*** Running minecraft-server found:" $is_it_running
 else
 echo "*** No screen called 'minecraft' found. Is server really running?"
 fi
@@ -105,15 +105,15 @@ is_it_running=`screen -ls | grep minecraft`
 if [ "$is_it_running" != "" ]
 then
   echo "*** Sending message to players, that server will restart in $r_time sec"
-  screen -dr minecraft -p 0 -X stuff "$(printf "broadcast ServerRestart in $r_time Sekunden!!\r")"
+  screen -dr minecraft -p 0 -X stuff "$(printf "broadcast Server restart in $r_time secs!!\r")"
   echo "*** Message sent. Wait $r_time sec ..."
   sleep $r_time
   echo "*** Saving chunks with 'save-all'"
   screen -dr minecraft -p 0 -X stuff "$(printf "save-all\r")"
-  screen -dr minecraft -p 0 -X stuff "$(printf "say Server wird neugestartet.\r")"
+  screen -dr minecraft -p 0 -X stuff "$(printf "say Server will be restarted.\r")"
   sleep 5
   echo "*** Stopping" $is_it_running "now."
-  screen -dr minecraft -p 0 -X stuff "$(printf "stop Wir sind gleich wieder da\r")"
+  screen -dr minecraft -p 0 -X stuff "$(printf "stop We will be back\r")"
 
   echo "*** Check for stopped Server"
   s_running=`screen -ls | grep minecraft`
