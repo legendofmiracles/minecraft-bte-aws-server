@@ -40,13 +40,12 @@ if os.path.exists('/tmp/mc_last_activity'):
 	else:
 		old_time = float(f.read()) 
 		time_past = time.time() - old_time
-		if time_past > (30*60):
+		if time_past > (10*60):
 			if not os.path.exists('/tmp/mc_backup'):
 				p = open('/tmp/mc_backup', 'w')
 				p.write(str(time.time()))
 				check_call(['aws', 's3', 'sync', '/home/ec2-user/minecraft/', sys.argv[1], '--exclude logs/*'])
-			
-			#req = urllib2.urlopen('<SERVER DESTROY LAMBDA FUNCTION>')
+				check_call(['aws', 'sns', 'publish', '--topic-arn arn:aws:sns:eu-central-1:621427441349:mc-shutoff', '--message {}', '--region eu-central-1'])
 
 else:
 	f = open('/tmp/mc_last_activity', 'w')

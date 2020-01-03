@@ -120,7 +120,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "minecraft" {
-  name = "mc-backup-policy"
+  name = "mc-backup-publish-policy"
   role = "${aws_iam_role.minecraft.id}"
 
   policy = <<EOF
@@ -130,6 +130,13 @@ resource "aws_iam_role_policy" "minecraft" {
     {
       "Action": [
         "s3:*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+    {
+      "Action": [
+        "SNS:Publish"
       ],
       "Effect": "Allow",
       "Resource": "*"

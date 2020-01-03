@@ -4,3 +4,8 @@ locals {
     Name = "minecraft"
   }
 }
+
+# reference static SNS queue for auto-shutoff
+data "aws_sns_topic" "mc_shutoff" {
+  name = "mc-shutoff"
+}
