@@ -75,8 +75,8 @@ def install_terraform(install_url):
     # Flags:
     #   '-o' = overwrite existing files without prompting
     #   '-d' = output directory
-    check_call(['unzip', '-o', '/tmp/terraform.zip', '-d', TERRAFORM_DIR])
-    check_call([TERRAFORM_PATH, '--version'])
+    check_call('unzip -o /tmp/terraform.zip -d {0}'.format(TERRAFORM_DIR))
+    check_call('{0} --version'.format(TERRAFORM_PATH))
 
 
 def destroy_terraform_plan(s3_bucket, key):
@@ -93,7 +93,7 @@ def destroy_terraform_plan(s3_bucket, key):
     configfile.download_file('/tmp/config.tf')
 
     # init TF
-    check_call([TERRAFORM_PATH, 'init','-input=false'])
+    check_call('{0} init -input=false'.format(TERRAFORM_PATH))
 
     # Copy TF variable template
     accountfile = s3.Object(MC_BACKUP_S3_BUCKET, 'account.tfvars')
@@ -107,7 +107,9 @@ def destroy_terraform_plan(s3_bucket, key):
     planfile.download_file('/tmp/terraform.tfstate')
 
     # invoke TF destroy
-    check_call([TERRAFORM_PATH, 'destroy','-force','-state=/tmp/terraform.tfstate', '-var-file=/tmp/account.tfvars'])
+    check_call('{0} destroy -force -state=/tmp/terraform.tfstate -var-file=/tmp/account.tfvars'.format(TERRAFORM_PATH))
+
+    # uplaod updated planfile
     s3.meta.client.upload_file('/tmp/terraform.tfstate', s3_bucket, key)
 
 

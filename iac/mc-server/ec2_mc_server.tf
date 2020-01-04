@@ -27,67 +27,6 @@ resource "aws_eip_association" "minecraft" {
   allocation_id = var.eip-id
 }
 
-# -----------------------------------------
-# Provision the minecraft server using remote-exec
-# -----------------------------------------
-resource "null_resource" "minecraft" {
-  triggers = {
-    public_ip = aws_eip_association.minecraft.public_ip
-  }
-
-  connection {
-    type        = "ssh"
-    host        = aws_eip_association.minecraft.public_ip
-    user        = "ec2-user"
-    port        = "22"
-    private_key = file("~/.ssh/${var.ec2-key-pair-name}.pem")
-  }
-
-  // copy pre-configured ec2 instance private key
-  provisioner "file" {
-    source      = "~/.ssh/${var.ec2-key-pair-name}.pem"
-    destination = "id_rsa"
-  }
-
-  // copy mc auto-shutoff function
-  provisioner "file" {
-    source      = "../../src/auto-shutoff.py"
-    destination = "auto-shutoff.py"
-  }
-
-  // copy mc deployment and start script
-  provisioner "file" {
-    source      = "../../src/mc-setup.sh"
-    destination = "mc-setup.sh"
-  }
-  provisioner "file" {
-    source      = "../../src/mc-server.sh"
-    destination = "mc-server.sh"
-  }
-
-  // copy tf config and var template
-  provisioner "file" {
-    source      = "./config.tf"
-    destination = "config.tf"
-  }
-  provisioner "file" {
-    source      = "./variables.tf"
-    destination = "variables.tf"
-  }
-  provisioner "file" {
-    source      = "../../config/account.tfvars"
-    destination = "account.tfvars"
-  }
-
-  // install minecraft and sync backup
-  provisioner "remote-exec" {
-    inline = [
-      "chmod a+x mc-*.sh",
-      "./mc-setup.sh ${var.mc-bucket}",
-    ]
-  }
-}
-
 # ------------------------------------
 # IAM Roile for mincraft world backup on S3
 # ------------------------------------
@@ -144,4 +83,65 @@ resource "aws_iam_role_policy" "minecraft" {
   ]
 }
 EOF
+}
+
+# -----------------------------------------
+# Provision the minecraft server using remote-exec
+# -----------------------------------------
+resource "null_resource" "minecraft" {
+  triggers = {
+    public_ip = aws_eip_association.minecraft.public_ip
+  }
+
+  connection {
+    type        = "ssh"
+    host        = aws_eip_association.minecraft.public_ip
+    user        = "ec2-user"
+    port        = "22"
+    private_key = file("~/.ssh/${var.ec2-key-pair-name}.pem")
+  }
+
+  // copy pre-configured ec2 instance private key
+  provisioner "file" {
+    source      = "~/.ssh/${var.ec2-key-pair-name}.pem"
+    destination = "id_rsa"
+  }
+
+  // copy mc auto-shutoff function
+  provisioner "file" {
+    source      = "../../src/auto-shutoff.py"
+    destination = "auto-shutoff.py"
+  }
+
+  // copy mc deployment and start script
+  provisioner "file" {
+    source      = "../../src/mc-setup.sh"
+    destination = "mc-setup.sh"
+  }
+  provisioner "file" {
+    source      = "../../src/mc-server.sh"
+    destination = "mc-server.sh"
+  }
+
+  // copy tf config and var template
+  provisioner "file" {
+    source      = "./config.tf"
+    destination = "config.tf"
+  }
+  provisioner "file" {
+    source      = "./variables.tf"
+    destination = "variables.tf"
+  }
+  provisioner "file" {
+    source      = "../../config/account.tfvars"
+    destination = "account.tfvars"
+  }
+
+  // install minecraft and sync backup
+  provisioner "remote-exec" {
+    inline = [
+      "chmod a+x mc-*.sh",
+      "./mc-setup.sh ${var.mc-bucket} ${data.aws_sns_topic.mc_shutoff.arn} ${var.aws-region}",
+    ]
+  }
 }

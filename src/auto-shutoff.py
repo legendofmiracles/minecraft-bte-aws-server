@@ -26,27 +26,37 @@ def check_call(args):
 server = MinecraftServer.lookup("localhost:25565")
 status = server.status()
 
+# if last activity was recorded 
 if os.path.exists('/tmp/mc_last_activity'):
 	f = open('/tmp/mc_last_activity', 'r+')
 
 	if status.players.online:
+		# if players are online, remove timestamp file
 		f.seek(0)
 		f.write(str(time.time()))
 		f.truncate()
 
+		# force new backup on inactivity
 		if os.path.exists("/tmp/mc_backup"):
   			os.remove("/tmp/mc_backup")
 
 	else:
+		# get timestamp of last activity
 		old_time = float(f.read()) 
 		time_past = time.time() - old_time
+
+		# more than 10 min of inactivity?
 		if time_past > (10*60):
 			if not os.path.exists('/tmp/mc_backup'):
 				p = open('/tmp/mc_backup', 'w')
 				p.write(str(time.time()))
-				check_call(['aws', 's3', 'sync', '/home/ec2-user/minecraft/', sys.argv[1], '--exclude logs/*'])
-				check_call(['aws', 'sns', 'publish', '--topic-arn arn:aws:sns:eu-central-1:621427441349:mc-shutoff', '--message {}', '--region eu-central-1'])
+				check_call('aws s3 sync /home/ec2-user/minecraft/ {0} --exclude logs/*'.format(sys.argv[1]))
+				check_call('aws sns publish --topic-arn {1} --message {{}} --region {2}'.format(sys.argv[2], sys.argv[3]))
 
+				# start countdown again
+				os.remove("/tmp/mc_last_activity")
+				os.remove("/tmp/mc_backup")
 else:
+	# start the clock
 	f = open('/tmp/mc_last_activity', 'w')
 	f.write(str(time.time()))

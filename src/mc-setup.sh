@@ -34,6 +34,5 @@ fi
 # install minecraft status 
 sudo pip install mcstatus
 
-# insert auto-shutoff into cron tab
-# crontab -l | { cat; echo "*/5 * * * * aws s3 sync minecraft/ s3://$1"; } | crontab -
-crontab -l | { cat; echo "*/5 * * * * python auto-shutoff.py s3://$1"; } | crontab -
+# insert auto-shutoff into cron tab and run each minute
+crontab -l | { cat; echo "* * * * * python auto-shutoff.py s3://$1 $2 $3"; } | crontab -
