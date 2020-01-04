@@ -12,6 +12,7 @@ def check_call(args):
     and if not, prints stdout and stderr.
     """
     proc = subprocess.Popen(args,
+		shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd='/tmp')
@@ -45,17 +46,17 @@ if os.path.exists('/tmp/mc_last_activity'):
 		old_time = float(f.read()) 
 		time_past = time.time() - old_time
 
-		# more than 10 min of inactivity?
-		if time_past > (10*60):
+		# more than 5 min of inactivity?
+		if time_past > (5*60):
+			# backup mc world 
 			if not os.path.exists('/tmp/mc_backup'):
 				p = open('/tmp/mc_backup', 'w')
 				p.write(str(time.time()))
 				check_call('aws s3 sync /home/ec2-user/minecraft/ {0} --exclude logs/*'.format(sys.argv[1]))
-				check_call('aws sns publish --topic-arn {1} --message {{}} --region {2}'.format(sys.argv[2], sys.argv[3]))
 
-				# start countdown again
-				os.remove("/tmp/mc_last_activity")
-				os.remove("/tmp/mc_backup")
+			# hit the kill switch and start countdown again
+			check_call('aws sns publish --topic-arn {0} --message {{}} --region {1}'.format(sys.argv[2], sys.argv[3]))
+			os.remove("/tmp/mc_last_activity")
 else:
 	# start the clock
 	f = open('/tmp/mc_last_activity', 'w')

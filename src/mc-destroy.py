@@ -47,6 +47,7 @@ def check_call(args):
     and if not, prints stdout and stderr.
     """
     proc = subprocess.Popen(args,
+        shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=EXEC_DIR)
