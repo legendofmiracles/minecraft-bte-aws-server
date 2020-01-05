@@ -1,59 +1,64 @@
-# Terraform-deplay a minecraft server
+# McTerraform - A terraform'ed Minecraft server (with auto-destroy on inactivity) 
 
 Deploy Minecraft server using terraform to AWS. 
 
-Uses lambda functions to auto-destroy a Minecraft server instance after inactivity. S3 is used for Minecraft world backups and for storing terraform state. Lambda function sends notifications to a Discord channel.
+Uses lambda functions to auto-destroy a Minecraft server instance after inactivity. S3 is used for Minecraft world backups and for storing terraform state. 
+
+Future functionality:
+* add Discord bot for both starting and stopping the Minecraft instance
 
 ## Prerquisites
 * An AWS account with credentials for programmatic access
 * Download and install terraform
-* Python, and pip installed
+* For local development: python, and pip installed
 
-## Manual Configuration
-### Local
+## Configuration
+### Local Development
 * Install virtualenv: `sudo pip install virtualenv`
-
-. venv/bin/activate
-pip install -r requirements.txt
+* Change into source directory `cd src` 
+* Activate venv: `. venv/bin/activate`
+* Install dependencies: `pip install -r requirements.txt`
 
 ### AWS
-* Create S3 bucket for terraform state
-* Create S3 bucket for minecraft backup
-* Create Elastic IP
+* Create IAM credentials for programmatic access and add locally as named AWS credential
+* Create S3 bucket and DynamoDB table for terraform state
 * Create EC2 key
 
-Enter corresponding values in `config/account.tfvars`.
-Copy [latest Minecraft server download URL](https://www.minecraft.net/en-us/download/server/) into `src/mc-server.sh`.
+### Deployment Configuration
+* Modify `config/account.tfvars`.
+* Copy [latest Minecraft server download URL](https://www.minecraft.net/en-us/download/server/) into `src/mc-server.sh`.
 
-## Initial Install
-* `cd iac`
-* `terraform init`
-* `terraform apply -var-file=../config/account.tfvars`
-* Sit back and enjoy the show
+### Deployment Initialisation
+* Init terraform: `terraform init` in `iac/mc-static`and `iac/mc-server`
 
-## The man behind the curtain
-Beyond the allocation of AWs resources, the terraform script triggers modification of the ec2 instance. It installs the Minecraft server and adds crontab entries for syncing the minecraft directory to S3 and detecting idle state. Once idle state has been detected, it triggers the destruction of the ec2 instance via the afore mentioned lambda function.
+## Deployment
+### Static Resources (once)
+* Change to static infrastructure setup: `cd iac/mc-static`
+* Execute: `terraform apply -var-file=../../config/account.tfvars`
+* Creates: S3 bucket for mc world backup, Public IP, SNS topic plus attached Lambda for auto-destroy
 
-auto_shutoff.py - Runs on the minecraft server 
+### Server Resources
+* Change to server infrastructure setup: `cd iac/mc-server`
+* Execute: `terraform apply -var-file=../../config/account.tfvars`
+* Creates: Minecraft Server with attached Public IP
 
-mine-build.py - This is used in a lambda function. It pulls terraform files and startup bash script from s3 and starts an ec2 instance.
+## How it all works
+Beyond the allocation of AWs resources, the terraform script triggers modification of the ec2 instance. It installs the Minecraft server, downloads the S3 backed-up minecraft world to the local instance, and add's a crontab script for detecting idle state. Once idle state has been detected, it triggers a backup of the current minecraft world to S3, and triggering the destruction of the ec2 instance by sending an empty message on the SNS destroy topic.
 
-mine-destroy.py - Used in a lambda function to run terraform destroy and update the terraform state file in the s3 bucket
+Attached to the SNS Topic is a lambda function, which downloads and installs terraform locally within the lambda context and executes a 'terraform destroy' on the server resources.
 
-minecraft.sh - start up script use for ec2 instance
-
-server.tf - terraform configuration file.
-
-## Debugging
+## Misc
+### Debugging
 * Logging into ec2 instance: `ssh -i ~/.ssh/minecraft.pem ec2-user@<eip>`
 * Listing available screen sessions: `screen -ls`
 * Re-attaching to minecraft screen session: `screen -r minecraft`
 
-## Additional links
-* https://www.codingforentrepreneurs.com/blog/install-django-on-mac-or-linux - installing python on MacOS
-* https://jeremievallee.com/2017/03/26/aws-lambda-terraform.html - deploying AWs Lambda with terraform
-
-## Updating Minecraft
+### Updating Minecraft
 * Add new Minecraft version download URL in `src/mc-setup.sh`
 * Remove `eula.txt` file in root of minecraft backup S3 bucket
 * Re-apply terraform with `terraform apply -var-file=../config/account.tfvars`
+
+### Additional links
+* https://www.codingforentrepreneurs.com/blog/install-django-on-mac-or-linux - installing python on MacOS
+* https://jeremievallee.com/2017/03/26/aws-lambda-terraform.html - deploying AWs Lambda with terraform
+
