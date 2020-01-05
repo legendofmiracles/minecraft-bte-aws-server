@@ -46,8 +46,8 @@ if os.path.exists('/tmp/mc_last_activity'):
 		old_time = float(f.read()) 
 		time_past = time.time() - old_time
 
-		# more than 5 min of inactivity?
-		if time_past > (5*60):
+		# more than 10 min of inactivity?
+		if time_past > (10*60):
 			# backup mc world 
 			if not os.path.exists('/tmp/mc_backup'):
 				p = open('/tmp/mc_backup', 'w')
