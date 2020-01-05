@@ -2,7 +2,7 @@
 
 Deploy Minecraft server using terraform to AWS. 
 
-Uses lambda functions to create and destroy a Minecraft server instance with terraform. S3 is used for server backups and for storing terraform resources. Lambda functions can send notifications to a Discord channel.
+Uses lambda functions to auto-destroy a Minecraft server instance after inactivity. S3 is used for Minecraft world backups and for storing terraform state. Lambda function sends notifications to a Discord channel.
 
 ## Prerquisites
 * An AWS account with credentials for programmatic access
@@ -50,8 +50,8 @@ server.tf - terraform configuration file.
 * Re-attaching to minecraft screen session: `screen -r minecraft`
 
 ## Additional links
-* https://www.codingforentrepreneurs.com/blog/install-django-on-mac-or-linux
-* https://jeremievallee.com/2017/03/26/aws-lambda-terraform.html
+* https://www.codingforentrepreneurs.com/blog/install-django-on-mac-or-linux - installing python on MacOS
+* https://jeremievallee.com/2017/03/26/aws-lambda-terraform.html - deploying AWs Lambda with terraform
 
 ## Updating Minecraft
 * Add new Minecraft version download URL in `src/mc-setup.sh`

@@ -11,6 +11,7 @@ terraform {
 provider "aws" {
   profile = var.aws-profile
   region  = var.aws-region
+  version = "~> 2.43"
 }
 
 provider "archive" {

@@ -13,16 +13,6 @@ variable "ec2-key-pair-name" {
   type = string
 }
 
-# external IP id 
-variable "eip-id" {
-  type = string
-}
-
-# bucket name for mc backup/restore
-variable "mc-bucket" {
-  type = string
-}
-
 # bucket name for tf state
 variable "tf-bucket" {
   type = string

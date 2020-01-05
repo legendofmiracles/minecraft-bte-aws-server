@@ -24,7 +24,7 @@ resource "aws_instance" "minecraft" {
 
 resource "aws_eip_association" "minecraft" {
   instance_id   = aws_instance.minecraft.id
-  allocation_id = var.eip-id
+  allocation_id = data.aws_eip.mc_ip.id
 }
 
 # ------------------------------------
@@ -141,7 +141,7 @@ resource "null_resource" "minecraft" {
   provisioner "remote-exec" {
     inline = [
       "chmod a+x mc-*.sh",
-      "./mc-setup.sh ${var.mc-bucket} ${data.aws_sns_topic.mc_shutoff.arn} ${var.aws-region}",
+      "./mc-setup.sh ${data.aws_s3_bucket.mc_bucket.id} ${data.aws_sns_topic.mc_shutoff.arn} ${var.aws-region}",
     ]
   }
 }

@@ -7,6 +7,7 @@ resource "aws_lambda_function" "on_shutoff" {
   runtime          = "python3.6"
   role             = "${aws_iam_role.lambda_on_shutoff.arn}"
   publish          = true
+  memory_size      = 256
   timeout          = 300
   tags             = "${local.common_tags}"
 }
