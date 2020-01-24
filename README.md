@@ -8,8 +8,9 @@ Future functionality:
 * add Discord bot for both starting and stopping the Minecraft instance
 
 ## Prerequisites
-* An AWS account with credentials for programmatic access <https://aws.amazon.com>
+* An AWS account with user credentials for programmatic access - see <https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console>
 * Download and install terraform from <https://www.terraform.io/downloads.html>
+* For running the scripted setup of the Terraform resoources, install the AWS CLI at <https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html>
 * For local development (optional): python 3.7, and pip installed
 
 ## Configuration
