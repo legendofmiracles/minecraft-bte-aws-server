@@ -19,7 +19,7 @@ if [ ! -f "minecraft/eula.txt" ]; then
     cd minecraft
     rm server.jar || true
     # pick latest from https://www.minecraft.net/en-us/download/server/
-    wget https://launcher.mojang.com/v1/objects/4d1826eebac84847c71a77f9349cc22afd0cf0a1/server.jar
+    wget https://launcher.mojang.com/v1/objects/bb2b6b1aefcd70dfd1892149ac3a215f6c636b07/server.jar
     cat >eula.txt<<EOF
 #By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
 #Tue Jan 27 21:40:00 UTC 2015
