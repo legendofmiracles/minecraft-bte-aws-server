@@ -2,7 +2,7 @@
 # Minecraft EC2 server
 # ------------------------------------
 resource "aws_instance" "minecraft" {
-  instance_type = "t2.small"
+  instance_type = "t2.medium"
 
   ami               = var.ami-images[var.aws-region]
   security_groups   = [aws_security_group.minecraft.id]
