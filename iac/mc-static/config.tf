@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    profile        = "hlgr360"
-    bucket         = "hlgr360-tf-state"
+    profile        = "alx365"
+    bucket         = "alx365-tf-state"
     key            = "mc-static.tfstate"
     region         = "eu-central-1"
     encrypt        = true

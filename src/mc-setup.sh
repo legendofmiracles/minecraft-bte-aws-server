@@ -20,6 +20,10 @@ if [ ! -f "minecraft/eula.txt" ]; then
     rm server.jar || true
     # pick latest from https://www.minecraft.net/en-us/download/server/
     wget https://launcher.mojang.com/v1/objects/bb2b6b1aefcd70dfd1892149ac3a215f6c636b07/server.jar
+    #wget https://cdn.discordapp.com/attachments/699038518592405574/701622903971774475/BTE_Official_Server_MAC.zip
+    #unzip BTE_Official_Server_MAC.zip
+    #sh install.sh
+
     cat >eula.txt<<EOF
 #By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).
 #Tue Jan 27 21:40:00 UTC 2015
