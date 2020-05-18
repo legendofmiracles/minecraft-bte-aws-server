@@ -3,6 +3,7 @@
 import os
 import subprocess
 import urllib
+import requests
 import boto3
 import json
 
@@ -34,13 +35,10 @@ MC_BACKUP_S3_BUCKET = 'alx365-mc-backup'
 
 
 def send_discord_message(message):
-    url = "" # discord url
+    url = "https://discordapp.com/api/webhooks/711928282928382112/Jb5iO6rtGCdcP8nwz6anrys9VYxO8VtOT72uAYEvHWUC5MQxeo2t8e5hJXyFVMqAIr5C" # discord url
     data = json.dumps({'content': message})
-
-    req = urllib.request.Request(url)
-    req.add_header('Content-Type', 'application/json')
-    req.add_header('User-Agent', 'Magic Browser')
-    response = urllib.request.urlopen(req, data)
+    header = {"Content-Type": "application/json", "User-Agent": "drop table webhooks"}
+    response = requests.post(url, data, headers=header)
 
 def check_call(args):
     """Wrapper for subprocess that checks if a process runs correctly,
@@ -115,7 +113,7 @@ def destroy_terraform_plan(s3_bucket, key):
 
 
 def handler(event, context):
-    # send_discord_message("Server is now turning off")
+    send_discord_message("Server is now turning off, due to inactivity")
     install_terraform(TERRAFORM_LINUX_DOWNLOAD_URL)
     destroy_terraform_plan(s3_bucket=TERRAFORM_STATE_S3_BUCKET, key=TERRAFORM_STATE_KEY)
 

@@ -23,8 +23,8 @@ else
   echo "*** Starting minecraft-server on screen 'minecraft'"
   cd $DIR
   # screen -A -m -d -L -S minecraft java -Xincgc -Xmx512M -XX:+UseConcMarkSweepGC -jar paperclip.jar -o true -h 127.0.0.1 -p 25565 -s 100 --log-append false --log-limit 50000
-  screen -A -m -d -L -S sh run_nogui.sh
-
+  #screen -A -m -d -L -S sh run_nogui.sh
+  sh run_nogui.sh
   # check if it is running now
   status=`screen -ls | grep minecraft`
   if [ "$status" == "" ]
