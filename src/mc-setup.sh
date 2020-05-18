@@ -22,7 +22,9 @@ if [ ! -f "minecraft/eula.txt" ]; then
     #wget https://launcher.mojang.com/v1/objects/bb2b6b1aefcd70dfd1892149ac3a215f6c636b07/server.jar
     wget http://alx365.github.io/BTE_Official_Server_MAC.zip
     unzip BTE_Official_Server_MAC.zip
-    cd "BTE_Official_Server_MAC(1)" 
+    rm BTE_Official_Server_MAC.zip
+    #cd "BTE_Official_Server_MAC(1)" 
+    timedatectl set-time 2020-04-18
     sh install.sh
     sh run_nogui.sh
 

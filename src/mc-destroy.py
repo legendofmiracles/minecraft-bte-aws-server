@@ -8,7 +8,7 @@ import json
 
 
 # Version of Terraform that we're using
-TERRAFORM_VERSION = '0.12.10'
+TERRAFORM_VERSION = '0.12.24'
 
 # Download URL for Terraform
 TERRAFORM_LINUX_DOWNLOAD_URL = (
@@ -26,11 +26,11 @@ TERRAFORM_DIR = os.path.join(EXEC_DIR, 'terraform_%s' % TERRAFORM_VERSION)
 TERRAFORM_PATH = os.path.join(TERRAFORM_DIR, 'terraform')
 
 # TF Variables
-TERRAFORM_STATE_S3_BUCKET = 'hlgr360-tf-state'
+TERRAFORM_STATE_S3_BUCKET = 'alx365-tf-state'
 TERRAFORM_STATE_KEY = 'mc-server.tfstate'
 
 # MC backup bucket (holding the TF config and account template)
-MC_BACKUP_S3_BUCKET = 'hlgr360-mc-backup'
+MC_BACKUP_S3_BUCKET = 'alx365-mc-backup'
 
 
 def send_discord_message(message):
