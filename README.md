@@ -18,13 +18,7 @@ Future functionality:
 ### Setup
 Very Very Important!!! :  Update `config/account.tfvars`, `iac/mc-static/config.tf`, and `iac/mc-server/config.tf` with your credentials and your region and an unique name for your S3 bucket for Terraform state.
 
-
-Manual setup
-* Create [S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) and [DynamoDB table](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/getting-started-step-1.html) for terraform state via the AWS console
-  * Create the DynamoDB table with `LockID` as key attribute
-* Create [EC2 key](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) via the AWS console
-
-Scripted Setup (the better way)
+##### Scripted Setup (the better way)
 * make sure you have a `.aws` folder in your home directory, and a file called `credentials` in there with your credentials stored like that:
 ```
 [default]
