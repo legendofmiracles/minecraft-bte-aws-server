@@ -38,7 +38,7 @@ Replace everything in `< >`
 
 * Replace every `alx365` with your username in the `config/account.tfvars` as well as in `mc-static/config.tf` and in `mc-static/config.tf` also in `mc-destroy.py` 
 
-* Run `./init_tf_req.sh`in the root of the locally cloned repo
+* Run `./init_tf_req.sh`in the root of the locally cloned repo Doesn't work on windows. You should be able to copy the commands from there and then run them manually. I am not sure, because i am not on windows
 
 ### Deployment Initialisation
 * Init terraform: `terraform init` in `iac/mc-static`and `iac/mc-server`
