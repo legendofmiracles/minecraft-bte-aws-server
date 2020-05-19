@@ -33,14 +33,11 @@ aws_secret_access_key = <your passwd>
 aws_access_key_id = <same acress key>
 aws_secret_access_key = <same passwd>
 ```
-Replace everything in `<>`
+Replace everything in `< >`
 
 * Replace every `alx365' with your username in the `config/account.tfvars` as well as in `mc-static/config.tf` and in `mc-static/config.tf` also in 'mc-destroy.py' 
 
 * Run `./init_tf_req.sh`in the root of the locally cloned repo
-
-### Deployment Options
-* Copy [latest Minecraft server download URL](https://www.minecraft.net/en-us/download/server/) into `src/mc-server.sh`.
 
 ### Deployment Initialisation
 * Init terraform: `terraform init` in `iac/mc-static`and `iac/mc-server`
