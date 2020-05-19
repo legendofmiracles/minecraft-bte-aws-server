@@ -36,7 +36,7 @@ aws_secret_access_key = <same passwd>
 ```
 Replace everything in `< >`
 
-* Replace every `alx365' with your username in the `config/account.tfvars` as well as in `mc-static/config.tf` and in `mc-static/config.tf` also in 'mc-destroy.py' 
+* Replace every `alx365` with your username in the `config/account.tfvars` as well as in `mc-static/config.tf` and in `mc-static/config.tf` also in `mc-destroy.py` 
 
 * Run `./init_tf_req.sh`in the root of the locally cloned repo
 
