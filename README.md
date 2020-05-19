@@ -1,8 +1,8 @@
-# McTerraform - A terraform'ed Minecraft server (with auto-destroy on inactivity) 
+# McTerraform - A terraform'ed Minecraft BTE (build the earth) server (with auto-destroy on inactivity) 
 
-Deploy Minecraft server using terraform to AWS. 
+Deploy Minecraft BTE server using terraform to AWS. 
 
-Uses lambda functions to auto-destroy a Minecraft server instance after inactivity. S3 is used for Minecraft world backups and for storing terraform state. 
+Uses lambda functions to auto-destroy a Minecraft server instance after 15 minutes of inactivity. S3 is used for Minecraft world backups and for storing terraform state. 
 
 Future functionality:
 * add Discord bot for both starting and stopping the Minecraft instance
@@ -11,15 +11,6 @@ Future functionality:
 * An AWS account with user credentials for programmatic access - see <https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console>
 * Download and install terraform from <https://www.terraform.io/downloads.html>
 * For running the scripted setup of the Terraform resoources, install the AWS CLI at <https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html>
-* For local development (optional): python 3.7, and pip installed
-
-## Configuration
-### Local Development
-* Install virtualenv: `sudo pip install virtualenv`
-* Change into source directory `cd src` 
-* Activate venv: `. venv/bin/activate`
-* Install dependencies: `pip install -r requirements.txt`
-
 ### AWS
 * Create IAM credentials for programmatic access and add locally [as named AWS credential](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
   * Update `config/account.tfvars`, `iac/mc-static/config.tf`, and `iac/mc-server/config.tf` with your credentials and your region and an unique name for your S3 bucket for Terraform state
