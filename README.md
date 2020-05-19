@@ -24,6 +24,7 @@ Future functionality:
   * Update `config/account.tfvars`, `iac/mc-static/config.tf`, and `iac/mc-server/config.tf` with your credentials and your region and an unique name for your S3 bucket for Terraform state
 
 ##### Scripted Setup
+* If you want to debug it, you will have to go into the aws console and make a ssh key named minecraft which you then have to download  
 * make sure you have a `.aws` folder in your home directory, and a file called `credentials` in there with your credentials stored like that:
 ```~/.aws/credentials
 [default]
