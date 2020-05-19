@@ -72,6 +72,6 @@ Attached to the SNS Topic is a lambda function, which downloads and installs ter
 
 ### Contributing
 * feel free to contribute. 
-* But you can just clone the repo and tailor it to your needs.
+* But you can just clone the repo and tailor it to your needs. But the cloned repo **has** to be using the Apache 2 license
 
 Have fun!
