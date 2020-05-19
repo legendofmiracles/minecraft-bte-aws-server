@@ -25,7 +25,7 @@ Manual setup
 * Create [EC2 key](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) via the AWS console
 
 Scripted Setup (the better way)
-make sure you have a `.aws` folder in your home directory, and a file called `credentials` in there with your credentials stored like that:
+* make sure you have a `.aws` folder in your home directory, and a file called `credentials` in there with your credentials stored like that:
 ```
 [default]
 aws_access_key_id = <your key>
