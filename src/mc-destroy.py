@@ -35,7 +35,7 @@ MC_BACKUP_S3_BUCKET = 'alx365-mc-backup'
 
 
 def send_discord_message(message):
-    url = "" Your discord webhook url here
+    url = "" #Your discord webhook url here
     data = json.dumps({'content': message})
     header = {"Content-Type": "application/json", "User-Agent": "drop table webhooks"}
     response = requests.post(url, data, headers=header)
