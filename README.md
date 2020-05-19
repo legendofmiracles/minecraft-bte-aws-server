@@ -7,6 +7,9 @@ Uses lambda functions to auto-destroy a Minecraft server instance after 15 minut
 Future functionality:
 * add Discord bot for both starting and stopping the Minecraft instance
 
+# How to setup
+* Go through Prequesities and Setup
+
 ## Prerequisites
 * An AWS account with user credentials for programmatic access - see <https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console>
 * Download and install terraform from <https://www.terraform.io/downloads.html>
@@ -15,10 +18,7 @@ Future functionality:
 * Create IAM credentials for programmatic access and add locally [as named AWS credential](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html)
   * Update `config/account.tfvars`, `iac/mc-static/config.tf`, and `iac/mc-server/config.tf` with your credentials and your region and an unique name for your S3 bucket for Terraform state
 
-### Setup
-Very Very Important!!! :  Update `config/account.tfvars`, `iac/mc-static/config.tf`, and `iac/mc-server/config.tf` with your credentials and your region and an unique name for your S3 bucket for Terraform state.
-
-##### Scripted Setup (the better way)
+##### Scripted Setup
 * make sure you have a `.aws` folder in your home directory, and a file called `credentials` in there with your credentials stored like that:
 ```
 [default]
