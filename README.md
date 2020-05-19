@@ -20,7 +20,7 @@ Future functionality:
 
 ##### Scripted Setup
 * make sure you have a `.aws` folder in your home directory, and a file called `credentials` in there with your credentials stored like that:
-```
+```~/.aws/credentials
 [default]
 aws_access_key_id = <your key>
 aws_secret_access_key = <your passwd>
